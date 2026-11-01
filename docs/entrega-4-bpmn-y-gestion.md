@@ -26,6 +26,39 @@ Gestionar las historias de usuario mediante un tablero ágil.
 Definir indicadores y estándares para auditar el funcionamiento del sistema.
 Declarar de forma transparente el uso de inteligencia artificial en la elaboración del trabajo.
 
+# Modelado de Procesos de Negocio — BPMN
+# Proceso modelado:
+El proceso modelado es “Registro de venta y actualización automática de stock”.
+El sistema permitirá consultar la disponibilidad de productos, validar los datos de la venta, descontar automáticamente el stock, generar comprobantes y emitir alertas cuando un producto alcance su stock mínimo.
+
+# 1.2 Pools y Lanes:
+Pool:                      Lane:                   Responsabilidad:
+TecnoFacil S.R.L           Cliente                 Solicita un producto y recibe la mercadería.
+TecnoFacil S.R.L           Vendedor                Atiende al cliente, consulta stock y registra la venta.
+TecnoFacil S.R.L           Sistema de Gestión      Valida stock, registra la venta, descuenta stock y emite comprobante.
+TecnoFacil S.R.L           Depósito                Prepara y entrega el producto.
+TecnoFacil S.R.L           Administración          Controla ventas, cobros y reportes.
+Proveedor                  Proveedor               Recibe pedidos de reposición y entrega mercadería.
+
+# Flujo estándar:
+El cliente solicita un producto.
+El vendedor consulta la disponibilidad en el sistema.
+El sistema verifica el stock disponible.
+Si hay stock, el vendedor registra la venta.
+El sistema valida los datos del cliente, producto, cantidad y precio.
+El sistema descuenta automáticamente la cantidad vendida del stock.
+El sistema genera el comprobante de venta.
+El depósito prepara y entrega el producto.
+El sistema registra la entrega y actualiza el estado de la venta.
+Administración consulta reportes de ventas, stock y facturación.
+
+# Compuertas lógicas y excepciones:
+Compuerta:                  Decisión:                                 Camino normal:               Excepción:
+Gateway exclusiva XOR       Hay stock disponible?                     Si: continúa la venta.       No: se informa falta de stock y se genera pedido de reposición.
+Gateway exclusiva XOR       Los datos de la venta son válidos?        Si: se confirma la venta.    No: el sistema solicita corrección al vendedor.
+Gateway exclusiva XOR       El stock quedó por debajo del mínimo?     No: finaliza el proceso.     Si: se genera alerta y pedido sugerido a Compras.
+
+
 # 4. Conclusion.
 
 Esta entrega integra el análisis organizacional realizado en las instancias previas con herramientas de modelado, colaboración y gestión ágil. 
