@@ -32,7 +32,7 @@ Mejorar la organización, el control y la trazabilidad de las operaciones comerc
 
 ## Tablero ágil
 
-- [GitHub Projects](URL-del-tablero)
+- [https://github.com/users/GinaD1889/projects/1/views/1]
 
 ## Declaración de uso de IA
 
