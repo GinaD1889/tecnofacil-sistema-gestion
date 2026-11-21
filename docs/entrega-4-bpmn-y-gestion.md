@@ -33,33 +33,34 @@ El sistema permitirá consultar la disponibilidad de productos, validar los dato
 
 # 1.2 Pools y Lanes:
 Pool:                      Lane:                   Responsabilidad:
-TecnoFacil S.R.L           Cliente                 Solicita un producto y recibe la mercadería.
-TecnoFacil S.R.L           Vendedor                Atiende al cliente, consulta stock y registra la venta.
-TecnoFacil S.R.L           Sistema de Gestión      Valida stock, registra la venta, descuenta stock y emite comprobante.
-TecnoFacil S.R.L           Depósito                Prepara y entrega el producto.
-TecnoFacil S.R.L           Administración          Controla ventas, cobros y reportes.
-Proveedor                  Proveedor               Recibe pedidos de reposición y entrega mercadería.
+Cliente                    Cliente                 Solicita un producto, realiza el pago y recibe la mercadería y el comprobante.
+TecnoFacil S.R.L           Vendedor                Atiende al cliente, consulta stock, registra la venta y prepara/entrega el pedido.
+TecnoFacil S.R.L           Sistema de Gestión      Valida los datos, descuenta el stock, actualiza el registro de ventas y evalúa el stock mínimo.
+TecnoFacil S.R.L           Depósito                Verifica el stock físico, gestiona la reposición y recibe/actualiza la mercadería.
+TecnoFacil S.R.L           Administración          Registra el pago, emite el comprobante y genera reportes de ventas y stock.
+Proveedor Externo          Proveedor               Recibe la solicitud de reposición, prepara y envía la mercadería, y confirma el envío.
 
 # Flujo estándar:
-El cliente solicita un producto.
-El vendedor consulta la disponibilidad en el sistema.
-El sistema verifica el stock disponible.
-Si hay stock, el vendedor registra la venta.
-El sistema valida los datos del cliente, producto, cantidad y precio.
-El sistema descuenta automáticamente la cantidad vendida del stock.
-El sistema genera el comprobante de venta.
-El depósito prepara y entrega el producto.
-El sistema registra la entrega y actualiza el estado de la venta.
-Administración consulta reportes de ventas, stock y facturación.
+1. El cliente solicita el producto y el vendedor consulta su disponibilidad.
+2. La compuerta exclusiva “¿Stock disponible?” deriva el flujo: con stock, se registra la venta; sin stock, se
+informa la falta y se inicia la reposición.
+3. En la venta normal, el Sistema de Gestión valida los datos, descuenta las unidades vendidas y actualiza el
+registro.
+4. El vendedor prepara el pedido y el Depósito entrega el producto al cliente.
+5. Administración registra el pago, emite el comprobante y actualiza el reporte de ventas y stock.
+6. La compuerta “¿Stock bajo mínimo?” evalúa el inventario. Si corresponde, Depósito genera una solicitud de
+reposición al proveedor; si no, continúa el flujo normal.
+7. El proveedor recibe la solicitud, prepara y envía la mercadería, y confirma el envío.
+8. Depósito registra la recepción, actualiza y verifica el stock físico, y deja la reposición disponible para las
+ventas siguientes
 
 # Compuertas lógicas y excepciones:
 Compuerta:                  Decisión:                                 Camino normal:               Excepción:
-Gateway exclusiva XOR       Hay stock disponible?                     Si: continúa la venta.       No: se informa falta de stock y se genera pedido de reposición.
-Gateway exclusiva XOR       Los datos de la venta son válidos?        Si: se confirma la venta.    No: el sistema solicita corrección al vendedor.
-Gateway exclusiva XOR       El stock quedó por debajo del mínimo?     No: finaliza el proceso.     Si: se genera alerta y pedido sugerido a Compras.
+Gateway exclusiva XOR       Hay stock disponible?                     Sí: se registra la venta     No: se informa falta de stock y se genera pedido de reposición.
+Gateway exclusiva XOR       El stock quedó por debajo del mínimo?     No: se mantiene la venta     Si: se genera alerta y pedido al proveedor.
 
 # Diagrama actualizado: 
-Diagrama_BPMN_corregido.drawio
+Diagrama_BPMN_corregido.png
 
 # 4. Conclusion.
 
