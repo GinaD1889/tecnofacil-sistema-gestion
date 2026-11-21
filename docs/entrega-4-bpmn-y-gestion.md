@@ -59,7 +59,7 @@ Gateway exclusiva XOR       Los datos de la venta son válidos?        Si: se co
 Gateway exclusiva XOR       El stock quedó por debajo del mínimo?     No: finaliza el proceso.     Si: se genera alerta y pedido sugerido a Compras.
 
 # Diagrama actualizado: 
-DiagramaBPMN.jpeg
+Diagrama_BPMN_corregido.drawio
 
 # 4. Conclusion.
 
